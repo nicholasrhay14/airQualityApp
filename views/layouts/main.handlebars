@@ -1,0 +1,25 @@
+<!doctype html>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <div class="container">
+        <canvas id="aqChart"></canvas>
+    </div>
+    <script>
+        new Chart(document.getElementById("aqChart"), {
+            type: "line",
+            data: {
+                labels: [{{AQIdates}}],
+                datasets: [{
+                    label:'{{title}}',
+                    data: [{{AQIdata}}]
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+       
+    </script>
+</body>

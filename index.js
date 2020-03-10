@@ -1,3 +1,6 @@
+/**
+ * @fileOverview
+ */
 const express = require("express");
 const request = require("request");
 const rp = require("request-promise");
@@ -7,8 +10,13 @@ const extractor = require("./lib/extractor");
 const airDataModel = require("./models/airData");
 const app = express();
 const Chart = require("chart.js");
-
+/**
+ * Username to login to the database
+ */
 let un = `nrHay`;
+/**
+ * Password to login to the database
+ */
 let pw = `m1Database!`;
 mongoose.connect(
   `mongodb+srv://${un}:${pw}@cluster0-qdloe.gcp.mongodb.net/test?retryWrites=true&w=majority`
@@ -16,7 +24,6 @@ mongoose.connect(
 
 app.engine("handlebars", hbs());
 app.set("view engine", "handlebars");
-
 app.get("/api/data", (req, res) => {
   airDataModel
     .find({})
@@ -29,6 +36,10 @@ app.get("/api/data", (req, res) => {
     });
 });
 
+/**
+ * Retrives AQI data from JSON objects as floating points
+ * @param {Object} jsons
+ */
 function getAQIdata(jsons) {
   result = [];
   for (var i = 0; i < jsons.length; i++) {
@@ -36,7 +47,10 @@ function getAQIdata(jsons) {
   }
   return result;
 }
-
+/**
+ * Retrives timestamps from JSON object as epoch seconds
+ * @param {Object} jsons
+ */
 function getAQItimestamps(jsons) {
   result = [];
   for (var i = 0; i < jsons.length; i++) {

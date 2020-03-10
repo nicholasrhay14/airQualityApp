@@ -1,16 +1,25 @@
 <!doctype html>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <div class="container">
         <canvas id="aqChart"></canvas>
     </div>
     <script>
-        new Chart(document.getElementById("aqChart"), {
+        var timeFormat = 'DD/MM/YYYY HH:mm';
+
+        function toReadableTime(epochDate) {
+           return moment.unix(epochDate/1000).format(timeFormat);
+       }
+
+        let AQIdates = [{{AQIdates}}];
+
+        let config = {
             type: "line",
             data: {
-                labels: [{{AQIdates}}],
+                labels: [],
                 datasets: [{
                     label:'{{title}}',
                     data: [{{AQIdata}}]
@@ -19,7 +28,15 @@
             options: {
                 responsive: true,
             }
-        });
-       
+        };
+
+        let ctx = document.getElementById('aqChart').getContext('2d');
+		window.myLine = new Chart(ctx, config);
+
+        for(var i=0; i<AQIdates.length; i++) {
+            config.data.labels.push(toReadableTime(AQIdates[i]));
+        }
+
+        window.myLine.update();
     </script>
 </body>

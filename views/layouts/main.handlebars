@@ -8,6 +8,11 @@
         <canvas id="aqChart"></canvas>
     </div>
     <script>
+        let timeFormat = "DD/MM/YYYY hh:ss";
+        function toReadableTime(timestamp) {
+            return moment.unix(timestamp/1000).format(timeFormat);
+        }
+        let AQIdates = [{{AQIdates}}];
         let config = {
             type: "line",
             data: {
